@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 
-
+// limit to only accept request from particular IPs
 
 app.listen(process.env.PORT || 5000, function(err) {
     if(err){
@@ -11,6 +11,6 @@ app.listen(process.env.PORT || 5000, function(err) {
     }
 });
 
-app.get('*', function(req, res) {
+app.get('/access/store', function(req, res) {
   res.status(200).send('ok')
 });
