@@ -1,11 +1,13 @@
 var express = require('express');
 var app = express();
 
-app.listen(9000, function(err) {
+
+
+app.listen(process.env.PORT || 5000, function(err) {
     if(err){
        console.log(err);
        } else {
-       console.log("listen:9000");
+       console.log("listen:5000");
     }
 });
 
