@@ -1,0 +1,23 @@
+{
+  "name": "mpconnectbackend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start" : "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dan12t3/mpconnectbackend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dan12t3/mpconnectbackend/issues"
+  },
+  "homepage": "https://github.com/dan12t3/mpconnectbackend#readme",
+  "dependencies": {
+    "express": "^4.15.3"
+  }
+}
