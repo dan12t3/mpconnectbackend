@@ -24,6 +24,7 @@ app.get('/access/store', function(req, res) {
   var shop = req.query.name;
 
   var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]=';
+  //var shopifyURL = 'https://google.com';
 
   res.redirect(shopifyURL);
 });
