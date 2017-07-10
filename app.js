@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var crypto = require('crypto');
 var http = require('http');
+var querystring = require('querystring');
 var Promise = require('promise');
 
 //constants
@@ -11,6 +12,7 @@ const scopes = "read_reports,read_products,read_orders";
 const hostname = "https://mpconnectbackend.herokuapp.com";
 const redirect_uri = hostname + "/verify/store"; //needs to
 const nonce = "123"; //needs to be random and unique
+var shop = 'dan12t3devstore';
 //const nonce = cryto.randomBytes(256).toString('hex'); //needs to be random and unique
 
 // limit to only accept request from particular IPs
@@ -20,12 +22,13 @@ app.listen(process.env.PORT || 5000, function(err) {
        console.log(err);
        } else {
        console.log("listen:5000");
+
     }
 });
 
 app.get('/access/store', function(req, res) {
   //sanitize name
-  var shop = req.query.name;
+  shop = req.query.name;
   var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]=';
   //var shopifyURL = 'https://google.com';
   res.redirect(shopifyURL);
@@ -40,65 +43,96 @@ app.get('/verify/store',function(req, res){
   var time = req.query.timestamp;
   var verifyCount = 0;
 
-  //promise check for isReachable
-    //if successful and other checks are done do the post request
-    //post request to - POST https://{shop}.myshopify.com/admin/oauth/access_token
-    // body contains client_id, client_id, code
-
-    //else end everything maybe go to error page
-
-  //all the other checks
-
-  //at last check, if promise is done and other checks are done, do post request
   if(verifyHost(storeHost)){
     console.log("Hostname confirmed");
     verifyCount++;
   }else{
-    rejectToken();
+    rejectToken(res);
   }
 
-  isReachable(storeHost).then((res) => {
-    console.log("Hostname is reachable",res);
+  isReachable(storeHost).then((response) => {
+    console.log("Hostname is reachable",response);
     verifyCount++;
 
-    postForToken(verifyCount);
+    postForToken(verifyCount,res);
   },(err) => {
     console.log("Hostname isn't reachable",err);
-    rejectToken();
+    rejectToken(res);
   });
 
   if(state === nonce){
     verifyCount++;
     console.log("Nonce confirmed");
   }else{
-    rejectToken();
+    rejectToken(res);
   }
 
-  if(verifyHMAC(req.query,hmac,authCode,storeHost,state,time)){
+  if(verifyHMAC(req.query,hmac)){
     verifyCount++;
     console.log("HMAC confirmed");
-    postForToken(verifyCount);
+    postForToken(verifyCount,res);
   }else{
-    rejectToken();
+    rejectToken(res);
   }
-
-
-
-
 });
 
-function postForToken(count){
+function postForToken(count,res,code){
+  //POST https://{shop}.myshopify.com/admin/oauth/access_token
+
+  //api_key
+  //secret
+  //code
+
+
+
+
   if(count === 4){
+
+    var data = querystring.stringify({
+      'client_id': api_key,
+      'client_secret' : secret,
+      'code' : code
+    });
+
+    var option = {
+      host: shop+'.myshopify.com',
+      port: 80,
+      path: '/admin/oauth/access_token',
+      method: 'POST',
+      headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Content-Length': Buffer.byteLength(data)
+        }
+    }
+
+    var post = postRequest(option);
+    post.write(data);
+    post.end();
+
     console.log("Ready to Post");
+    res.send("ok");
   }
 }
 
-function rejectToken(){
+function postRequest(option){
+  return http.request(option,(res) => {
+    res.setEncoding('utf8');
+    res.on('data', (chunk) => {
+      console.log('Response: ' + chunk);
+    });
+  }).on('error',(e) => {
+    console.log(e);
+  });
+
+}
+
+function rejectToken(res){
   console.log("Verification Failed");
+  res.send("error");
 }
 
 //function
-function verifyHMAC(obj,hmac, authCode, storeHost,state,time){
+function verifyHMAC(obj,hmac){
 
   delete obj.hmac;
 
@@ -162,8 +196,16 @@ function isReachable(hostname){
 
 function isShopify(hostname){
   const hostArray = hostname.split(".");
-  if(hostArray[hostArray.length-2] === "shopify" || hostArray[hostArray.length-1] === "com"){
-    return true;
+
+  if(hostArray[hostArray.length-2] === "myshopify" && hostArray[hostArray.length-1] === "com"){
+    var shopArray = hostArray.splice(0,hostArray.length-2);
+    var shopName = shopArray.join(".");
+
+    if(shopName === shop){
+      return true;
+    }else{
+      return false;
+    }
   }else{
     return false;
   }
