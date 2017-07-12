@@ -207,9 +207,12 @@ function isShopify(hostname){
     if(shopName === shop){
       return true;
     }else{
+      console.log("shopname isnt the same as before");
       return false;
     }
   }else{
+    console.log(hostname);
+    console.log("not shopify");
     return false;
   }
 }
@@ -218,6 +221,7 @@ function regexCompare(hostname){
   if(/^[a-z0-9\-.]+$/.test(hostname)){
     return true;
   }else{
+    console.log("failed regex");
     return false;
   }
 }
