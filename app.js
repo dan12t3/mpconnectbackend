@@ -206,7 +206,7 @@ function isShopify(hostname){
     console.log(shop);
     console.log(shopName);
 
-    if(shopName === shop){
+    if(shopName.trim().toLowerCase() === shop.trim().toLowerCase()){
       return true;
     }else{
       console.log("shopname isnt the same as before");
