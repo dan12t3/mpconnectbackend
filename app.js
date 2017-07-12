@@ -8,7 +8,7 @@ var Promise = require('promise');
 //constants
 const secret = "e1b7b1cf4f381e406226b2a68821492b";
 const api_key = "84f3302b4c6a4c2f3ce6fd4aad2ff99c";
-const scopes = "read_reports,read_products,read_orders";
+const scopes = "read_content,read_reports,read_products,read_orders";
 const hostname = "https://mpconnectbackend.herokuapp.com";
 const redirect_uri = hostname + "/verify/store"; //needs to
 //const nonce = "123"; //needs to be random and unique
