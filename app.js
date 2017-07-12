@@ -92,11 +92,11 @@ function postForToken(count,res,code){
       host: shop+'.myshopify.com',
       port: 80,
       path: '/admin/oauth/access_token',
-      method: 'POST',
+      method: 'POST'/*,
       headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Content-Length': Buffer.byteLength(data)
-        }
+        }*/
     }
 
     var post = postRequest(option,res);
