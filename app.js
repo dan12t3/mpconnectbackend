@@ -105,8 +105,8 @@ function postForToken(count,res,code){
         }
     }
 
-    var post = postRequest(option);
-    post.write(data,res);
+    var post = postRequest(option,res);
+    post.write(data);
     post.end();
 
 
