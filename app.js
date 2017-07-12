@@ -13,7 +13,7 @@ const hostname = "https://mpconnectbackend.herokuapp.com";
 const redirect_uri = hostname + "/verify/store"; //needs to
 //const nonce = "123"; //needs to be random and unique
 var shop = 'dan12t3devstore';
-const nonce = cryto.randomBytes(256).toString('hex'); //needs to be random and unique
+const nonce = crypto.randomBytes(256).toString('hex'); //needs to be random and unique
 
 // limit to only accept request from particular IPs
 
