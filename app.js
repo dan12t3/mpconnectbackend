@@ -11,9 +11,9 @@ const api_key = "84f3302b4c6a4c2f3ce6fd4aad2ff99c";
 const scopes = "read_reports,read_products,read_orders";
 const hostname = "https://mpconnectbackend.herokuapp.com";
 const redirect_uri = hostname + "/verify/store"; //needs to
-const nonce = "123"; //needs to be random and unique
+//const nonce = "123"; //needs to be random and unique
 var shop = 'dan12t3devstore';
-//const nonce = cryto.randomBytes(256).toString('hex'); //needs to be random and unique
+const nonce = cryto.randomBytes(256).toString('hex'); //needs to be random and unique
 
 // limit to only accept request from particular IPs
 
@@ -29,7 +29,7 @@ app.listen(process.env.PORT || 5000, function(err) {
 app.get('/access/store', function(req, res) {
   //sanitize name
   shop = req.query.name;
-  var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]=';
+  var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]=per-user';
   //var shopifyURL = 'https://google.com';
   res.redirect(shopifyURL);
 });
@@ -118,6 +118,9 @@ function postRequest(option){
   return http.request(option,(res) => {
     res.setEncoding('utf8');
     res.on('data', (chunk) => {
+
+
+
       console.log('Response: ' + chunk);
     });
   }).on('error',(e) => {
