@@ -8,7 +8,8 @@ var Promise = require('promise');
 //constants
 const secret = "e1b7b1cf4f381e406226b2a68821492b";
 const api_key = "84f3302b4c6a4c2f3ce6fd4aad2ff99c";
-const scopes = "read_content,write_content,read_reports,write_reports,read_products,write_products,read_orders,write_orders";
+//const scopes = "read_content,write_content,read_reports,write_reports,read_products,write_products,read_orders,write_orders";
+const scopes = '';
 const hostname = "https://mpconnectbackend.herokuapp.com";
 const redirect_uri = hostname + "/verify/store"; //needs to
 //const nonce = "123"; //needs to be random and unique
@@ -77,14 +78,6 @@ app.get('/verify/store',function(req, res){
 });
 
 function postForToken(count,res,code){
-  //POST https://{shop}.myshopify.com/admin/oauth/access_token
-
-  //api_key
-  //secret
-  //code
-
-
-
 
   if(count === 4){
     console.log("Ready to Post");
@@ -108,9 +101,7 @@ function postForToken(count,res,code){
     var post = postRequest(option,res);
     post.write(data);
     post.end();
-
-
-    //res.send("ok");
+  //res.send("ok");
   }
 }
 
