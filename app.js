@@ -203,6 +203,8 @@ function isShopify(hostname){
   if(hostArray[hostArray.length-2] === "myshopify" && hostArray[hostArray.length-1] === "com"){
     var shopArray = hostArray.splice(0,hostArray.length-2);
     var shopName = shopArray.join(".");
+    console.log(shop);
+    console.log(shopName);
 
     if(shopName === shop){
       return true;
@@ -211,7 +213,7 @@ function isShopify(hostname){
       return false;
     }
   }else{
-    console.log(hostname);
+
     console.log("not shopify");
     return false;
   }
