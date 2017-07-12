@@ -29,7 +29,7 @@ app.listen(process.env.PORT || 5000, function(err) {
 app.get('/access/store', function(req, res) {
   //sanitize name
   shop = req.query.name;
-  var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]=per-user';
+  var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]=';
   //var shopifyURL = 'https://google.com';
   res.redirect(shopifyURL);
 });
