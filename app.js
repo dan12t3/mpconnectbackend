@@ -87,7 +87,7 @@ function postForToken(count,res,code){
 
 
   if(count === 4){
-
+    console.log("Ready to Post");
     var data = querystring.stringify({
       'client_id': api_key,
       'client_secret' : secret,
@@ -106,19 +106,19 @@ function postForToken(count,res,code){
     }
 
     var post = postRequest(option);
-    post.write(data);
+    post.write(data,res);
     post.end();
 
-    console.log("Ready to Post");
-    res.send("ok");
+
+    //res.send("ok");
   }
 }
 
-function postRequest(option){
+function postRequest(option,frontResponse){
   return http.request(option,(res) => {
     res.setEncoding('utf8');
     res.on('data', (chunk) => {
-
+      frontResponse.send(chunk);
 
 
       console.log('Response: ' + chunk);
