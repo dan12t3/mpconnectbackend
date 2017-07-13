@@ -177,7 +177,8 @@ function isReachable(hostname){
   //hostname = 'www.google.ca'
   var options = {
   host: hostname,
-  port: 443
+  port: 443,
+  path: '/index.html'
   };
   return new Promise((resolve, reject) => {
     http.get(options, function(res) {
