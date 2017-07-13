@@ -13,9 +13,9 @@ const scopes = 'read_content';
 const hostname = "https://mpconnectbackend.herokuapp.com";
 const options = 'per-user';
 const redirect_uri = hostname + "/verify/store"; //needs to
-//const nonce = "123"; //needs to be random and unique
+const nonce = "123"; //needs to be random and unique
 var shop = 'dan12t3devstore';
-const nonce = crypto.randomBytes(256).toString('hex'); //needs to be random and unique
+//const nonce = crypto.randomBytes(256).toString('hex'); //needs to be random and unique
 
 // limit to only accept request from particular IPs
 
@@ -76,7 +76,26 @@ app.get('/verify/store',function(req, res){
   }else{
     rejectToken(res);
   }
+
+
 });
+
+function isReachable(hostname){
+  //hostname = 'www.google.ca'
+  console.log(hostname);
+  var options = {
+  host: 'www.'+hostname,
+  port: 80
+  };
+  return new Promise((resolve, reject) => {
+    http.get(options, function(res) {
+      resolve(res.statusCode);
+    }).on('error', function(e) {
+        reject(e);
+    });
+  });
+}
+
 
 function postForToken(count,res,code){
 
@@ -89,8 +108,8 @@ function postForToken(count,res,code){
     });
 
     var option = {
-      host: shop+'.myshopify.com',
-      port: 443,
+      host: 'www.'+shop+'.myshopify.com',
+      port: 80,
       path: '/admin/oauth/access_token',
       method: 'POST'/*,
       headers: {
@@ -173,21 +192,6 @@ function verifyHost(hostname){
   return verified;
 }
 
-function isReachable(hostname){
-  //hostname = 'www.google.ca'
-  var options = {
-  host: hostname,
-  port: 443,
-  path: '/password'
-  };
-  return new Promise((resolve, reject) => {
-    http.get(options, function(res) {
-      resolve(res.statusCode);
-    }).on('error', function(e) {
-        reject(e);
-    });
-  });
-}
 
 function isShopify(hostname){
   const hostArray = hostname.split(".");
