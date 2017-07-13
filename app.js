@@ -90,7 +90,7 @@ function postForToken(count,res,code){
 
     var option = {
       host: shop+'.myshopify.com',
-      port: 80,
+      port: 443,
       path: '/admin/oauth/access_token',
       method: 'POST'/*,
       headers: {
@@ -178,7 +178,7 @@ function isReachable(hostname){
   var options = {
   host: hostname,
   port: 443,
-  path: '/index.html'
+  path: '/password'
   };
   return new Promise((resolve, reject) => {
     http.get(options, function(res) {
