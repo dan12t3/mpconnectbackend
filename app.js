@@ -86,7 +86,7 @@ function isReachable(hostname){
   //hostname = 'www.google.ca'
   console.log('host:',hostname);
   var options = { method: 'GET',
-  url: 'http://dan12t3devstore.myshopify.com/',
+  url: 'http://'+hostname,
   headers:
    { 'User-Agent': 'javascript',
      'cache-control': 'no-cache' } };
