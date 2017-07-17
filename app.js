@@ -12,11 +12,11 @@ const api_key = "84f3302b4c6a4c2f3ce6fd4aad2ff99c";
 //const scopes = "read_content,write_content,read_reports,write_reports,read_products,write_products,read_orders,write_orders";
 const scopes = 'read_content';
 const hostname = "http://localhost:5000";
-const options = 'per-user';
+const options = '';
 const redirect_uri = hostname + "/verify/store"; //needs to
-const nonce = "123"; //needs to be random and unique
+//const nonce = "123"; //needs to be random and unique
 var shop = 'dan12t3devstore';
-//const nonce = crypto.randomBytes(256).toString('hex'); //needs to be random and unique
+const nonce = crypto.randomBytes(16).toString('hex'); //needs to be random and unique
 
 // limit to only accept request from particular IPs
 
@@ -58,7 +58,7 @@ app.get('/verify/store',function(req, res){
     console.log("Hostname is reachable",response);
     verifyCount++;
 
-    postForToken(verifyCount,res);
+    postForToken(verifyCount,res,authCode);
   },(err) => {
     console.log("Hostname isn't reachable",err);
     rejectToken(res);
@@ -74,7 +74,7 @@ app.get('/verify/store',function(req, res){
   if(verifyHMAC(req.query,hmac)){
     verifyCount++;
     console.log("HMAC confirmed");
-    postForToken(verifyCount,res);
+    postForToken(verifyCount,res,authCode);
   }else{
     rejectToken(res);
   }
@@ -111,7 +111,29 @@ function postForToken(count,res,code){
 
   if(count === 4){
     console.log("Ready to Post");
-    var data = querystring.stringify({
+
+    var options = { method: 'POST',
+      url: 'https://dan12t3devstore.myshopify.com/admin/oauth/access_token',
+      headers:
+       { 'User-Agent': 'javascript',
+         'cache-control': 'no-cache',
+         'content-type': 'application/json'
+          },
+      formData:
+       { client_id: '84f3302b4c6a4c2f3ce6fd4aad2ff99c',
+         client_secret: 'e1b7b1cf4f381e406226b2a68821492b',
+         code: code } };
+
+    request(options, function (error, response, body) {
+      console.log(response.statusCode);
+      if (error) throw new Error(error);
+      res.end(body);
+      console.log(body);
+    });
+
+
+
+    /*var data = querystring.stringify({
       'client_id': api_key,
       'client_secret' : secret,
       'code' : code
@@ -125,13 +147,13 @@ function postForToken(count,res,code){
       headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'Content-Length': Buffer.byteLength(data)
-        }*/
+        }
     }
 
     var post = postRequest(option,res);
     post.write(data);
     post.end();
-  //res.send("ok");
+  //res.send("ok");*/
   }
 }
 
