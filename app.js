@@ -4,13 +4,14 @@ var crypto = require('crypto');
 var http = require('http');
 var querystring = require('querystring');
 var Promise = require('promise');
+var request = require("request");
 
 //constants
 const secret = "e1b7b1cf4f381e406226b2a68821492b";
 const api_key = "84f3302b4c6a4c2f3ce6fd4aad2ff99c";
 //const scopes = "read_content,write_content,read_reports,write_reports,read_products,write_products,read_orders,write_orders";
 const scopes = 'read_content';
-const hostname = "https://mpconnectbackend.herokuapp.com";
+const hostname = "http://localhost:5000";
 const options = 'per-user';
 const redirect_uri = hostname + "/verify/store"; //needs to
 const nonce = "123"; //needs to be random and unique
@@ -32,6 +33,7 @@ app.get('/access/store', function(req, res) {
   //sanitize name
   shop = req.query.name;
   var shopifyURL = 'https://'+shop+'.myshopify.com/admin/oauth/authorize?client_id='+api_key+'&scope='+scopes+'&redirect_uri='+redirect_uri+'&state='+nonce+'&grant_options[]='+options;
+  console.log(shopifyURL);
   //var shopifyURL = 'https://google.com';
   res.redirect(shopifyURL);
 });
@@ -82,17 +84,25 @@ app.get('/verify/store',function(req, res){
 
 function isReachable(hostname){
   //hostname = 'www.google.ca'
-  console.log(hostname);
-  var options = {
-  host: 'www.'+hostname,
-  port: 80
-  };
+  console.log('host:',hostname);
+  var options = { method: 'GET',
+  url: 'http://dan12t3devstore.myshopify.com/',
+  headers:
+   { 'User-Agent': 'javascript',
+     'cache-control': 'no-cache' } };
+
+
   return new Promise((resolve, reject) => {
-    http.get(options, function(res) {
-      resolve(res.statusCode);
-    }).on('error', function(e) {
-        reject(e);
-    });
+    request(options, function (error, response, body) {
+  if (error){
+    reject(error);
+    throw new Error(error);
+  }else{
+    resolve(response.statusCode);
+  }
+
+  //console.log(body);
+});
   });
 }
 
@@ -192,21 +202,6 @@ function verifyHost(hostname){
   return verified;
 }
 
-function isReachable(hostname){
-  //hostname = 'www.google.ca'
-  var options = {
-  host: hostname,
-  port: 80,
-  path: '/password'
-  };
-  return new Promise((resolve, reject) => {
-    http.get(options, function(res) {
-      resolve(res.statusCode);
-    }).on('error', function(e) {
-        reject(e);
-    });
-  });
-}
 
 function isShopify(hostname){
   const hostArray = hostname.split(".");
@@ -214,8 +209,8 @@ function isShopify(hostname){
   if(hostArray[hostArray.length-2] === "myshopify" && hostArray[hostArray.length-1] === "com"){
     var shopArray = hostArray.splice(0,hostArray.length-2);
     var shopName = shopArray.join(".");
-    console.log(shop);
-    console.log(shopName);
+    //console.log(shop);
+    //console.log(shopName);
 
     if(shopName.trim().toLowerCase() === shop.trim().toLowerCase()){
       return true;

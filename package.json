@@ -19,7 +19,8 @@
   "homepage": "https://github.com/dan12t3/mpconnectbackend#readme",
   "dependencies": {
     "express": "^4.15.3",
-    "promise": "^8.0.0"
+    "promise": "^8.0.0",
+    "request": "^2.81.0"
   },
   "devDependencies": {
     "eslint": "^4.2.0",
