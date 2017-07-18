@@ -1,7 +1,7 @@
 var express = require('express');
 var app = express();
 var crypto = require('crypto');
-var http = require('http');
+var http = require('follow-redirects').http;
 var querystring = require('querystring');
 var Promise = require('promise');
 var request = require("request");
@@ -106,7 +106,6 @@ function isReachable(hostname){
   });
 }
 
-
 function postForToken(count,res,code){
 
   if(count === 4){
@@ -140,8 +139,7 @@ function postForToken(count,res,code){
     });
 
     var option = {
-      host: 'www.'+shop+'.myshopify.com',
-      port: 80,
+      host: shop+'.myshopify.com',
       path: '/admin/oauth/access_token',
       method: 'POST'/*,
       headers: {
