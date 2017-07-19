@@ -4,6 +4,7 @@ const console = require('console');
 const router = express.Router();
 const crypto = require('crypto');
 const shopifyAPI = require('shopify-node-api');
+var httpRequest = require('request');
 
 router.use('/',(request,response,next) => {
 
@@ -40,18 +41,29 @@ router.get('/exchange',(request, response) => {
       console.log(err)
     }else{
 
-      //connect to db
+      const options = {
+        method: 'POST',
+        url: config.host + '/db/saveToken',
+        headers: {
+          'content-type' : 'application/x-www-form-urlencoded'
+        },
+        form: {
+          store_name: request.session.config.shop,
+          access_token: request.session.config.access_token,
+          scope: request.session.config.shopify_scope
+        }
+      }
 
-      //db save
-        //access token
-        //store
-        //scope
-
+      httpRequest(options, (err, res) => {
+        if(err) console.log(err);
+        else console.log(res.statusCode);
+      })
 
       request.session.destroy((err) => {
         if(err) console.log(err);
       });
 
+      //now what?
       response.end(data['access_token']);
 
     }

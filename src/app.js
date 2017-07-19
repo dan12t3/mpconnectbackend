@@ -1,22 +1,38 @@
 const express = require('express');
 const console = require('console');
-const auth = require('./components/auth.js');
-const config = require('./config.js');
 const session = require('express-session');
+const bodyParser = require('body-parser');
+const fs = require('fs');
+const https = require('https');
+
+const auth = require('./components/auth.js');
+const db = require('./components/db.js');
+const config = require('./config.js');
+
 
 const port = process.env.PORT || config.port;
 //const server = config.host;
 
 let app = new express();
 
-app.listen(port,(err) => {
+const httpsOptions = {
+  key: fs.readFileSync('./server.key'),
+  cert: fs.readFileSync('./server.crt'),
+  passphrase: 'canada'
+}
+https.createServer(httpsOptions, app).listen(port, (err) => {
   if(err) console.log(err);
   else console.log("Server running on: " + port);
 })
 
+/*app.listen(port,(err) => {
+  if(err) console.log(err);
+  else console.log("Server running on: " + port);
+})*/
+
 let sess = {
   secret: 'kakazoo',
-  cookie: {},
+  cookie: { Domain: '.mpconnect.net' },
   resave: true,
   saveUninitialized: false
 }
@@ -24,7 +40,12 @@ let sess = {
 if(app.get('env') === 'production') {
   app.set('trust proxy',1);
   sess.cookie.secure = true;
+  //use different memorysave for session
 }
 
 app.use(session(sess));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 app.use('/auth',auth);
+app.use('/db',db);
