@@ -2,10 +2,10 @@
   "name": "mpconnectbackend",
   "version": "1.0.0",
   "description": "",
-  "main": "app.js",
+  "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js"
+    "start": "node src/app.js"
   },
   "repository": {
     "type": "git",
@@ -20,12 +20,16 @@
   "dependencies": {
     "express": "^4.15.3",
     "promise": "^8.0.0",
-    "request": "^2.81.0"
+    "request": "^2.81.0",
+    "shopify-node-api": "^1.8.0"
   },
   "devDependencies": {
     "eslint": "^4.2.0",
     "eslint-config-nodejs": "^2.0.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-node": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=6.0.0"
   }
 }
