@@ -2,8 +2,8 @@ const express = require('express');
 const console = require('console');
 const session = require('express-session');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const https = require('https');
+//const fs = require('fs');
+//const https = require('https');
 
 const auth = require('./components/auth.js');
 const db = require('./components/db.js');
@@ -15,7 +15,7 @@ const port = process.env.PORT || config.port;
 
 let app = new express();
 
-const httpsOptions = {
+/*const httpsOptions = {
   key: fs.readFileSync('./server.key'),
   cert: fs.readFileSync('./server.crt'),
   passphrase: 'canada'
@@ -23,12 +23,12 @@ const httpsOptions = {
 https.createServer(httpsOptions, app).listen(port, (err) => {
   if(err) console.log(err);
   else console.log("Server running on: " + port);
-})
+})*/
 
-/*app.listen(port,(err) => {
+app.listen(port,(err) => {
   if(err) console.log(err);
   else console.log("Server running on: " + port);
-})*/
+})
 
 let sess = {
   secret: 'kakazoo',
@@ -49,7 +49,3 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth',auth);
 app.use('/db',db);
-
-app.get('/',(req,res) => {
-  res.redirect('http://localhost:3000');
-})
