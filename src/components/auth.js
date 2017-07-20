@@ -54,10 +54,10 @@ router.get('/exchange',(request, response) => {
         }
       }
 
-      httpRequest(options, (err, res) => {
+      /*httpRequest(options, (err, res) => {
         if(err) console.log(err);
         else console.log(res.statusCode);
-      })
+      })*/
 
       request.session.destroy((err) => {
         if(err) console.log(err);

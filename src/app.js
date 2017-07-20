@@ -49,3 +49,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth',auth);
 app.use('/db',db);
+
+app.get('/',(req,res) => {
+  res.redirect('http://localhost:3000');
+})
