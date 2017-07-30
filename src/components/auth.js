@@ -65,7 +65,8 @@ router.get('/exchange',(request, response) => {
 
       //now what?
       //redirect to embed app page
-      response.end(data['access_token']);
+      console.log(data['access_token']);
+      response.redirect(config.front + '/store');
 
     }
   });
