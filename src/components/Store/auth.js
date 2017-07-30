@@ -1,10 +1,10 @@
 const express = require('express');
-const config = require('../config.js');
+const config = require('../../config.js');
 const console = require('console');
 const router = express.Router();
 const crypto = require('crypto');
 const shopifyAPI = require('shopify-node-api');
-var httpRequest = require('request');
+//var httpRequest = require('request');
 
 router.use('/',(request,response,next) => {
 
@@ -71,6 +71,7 @@ router.get('/exchange',(request, response) => {
 
       //redirect to where you left off
       //get from session
+
       response.redirect(config.front + '/store?token='+data['access_token']);
 
     }

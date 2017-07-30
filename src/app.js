@@ -5,8 +5,9 @@ const bodyParser = require('body-parser');
 //const fs = require('fs');
 //const https = require('https');
 
-const auth = require('./components/auth.js');
+const auth = require('./components/Store/auth.js');
 const db = require('./components/db.js');
+const profile = require('./components/Store/profile.js');
 const config = require('./config.js');
 
 
@@ -47,4 +48,5 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 app.use('/auth',auth);
+app.use('/profile',profile);
 app.use('/db',db);
