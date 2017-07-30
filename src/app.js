@@ -32,7 +32,6 @@ app.listen(port,(err) => {
 
 let sess = {
   secret: 'kakazoo',
-  cookie: { Domain: '.mpconnect.net' },
   resave: true,
   saveUninitialized: false
 }

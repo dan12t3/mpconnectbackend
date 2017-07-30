@@ -25,6 +25,9 @@ router.use('/',(request,response,next) => {
 router.get('/access',(request, response) => {
 
   request.session.config.shop = request.query.shop;
+  //redirect url to where you left off, default would be the homepage
+  //store in session
+
 
   let shopify = new shopifyAPI(request.session.config);
   let auth_URL = shopify.buildAuthURL();
@@ -34,6 +37,7 @@ router.get('/access',(request, response) => {
 
 router.get('/exchange',(request, response) => {
 
+  request.session.config.shop = request.query.shop;
   let shopify = new shopifyAPI(request.session.config);
 
   shopify.exchange_temporary_token(request.query,(err,data) => {
@@ -41,7 +45,7 @@ router.get('/exchange',(request, response) => {
       console.log(err)
     }else{
 
-      const options = {
+      /*const options = {
         method: 'POST',
         url: config.host + '/db/saveToken',
         headers: {
@@ -57,16 +61,17 @@ router.get('/exchange',(request, response) => {
       httpRequest(options, (err, res) => {
         if(err) console.log(err);
         else console.log(res.statusCode);
-      })
+      })*/
 
       request.session.destroy((err) => {
         if(err) console.log(err);
       });
 
-      //now what?
-      //redirect to embed app page
       console.log(data['access_token']);
-      response.redirect(config.front + '/store');
+
+      //redirect to where you left off
+      //get from session
+      response.redirect(config.front + '/store?token='+data['access_token']);
 
     }
   });
