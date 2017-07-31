@@ -19,6 +19,7 @@
   "homepage": "https://github.com/dan12t3/mpconnectbackend#readme",
   "dependencies": {
     "body-parser": "^1.17.2",
+    "cors": "^2.8.4",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
     "mysql": "^2.13.0",

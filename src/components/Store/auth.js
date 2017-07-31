@@ -24,6 +24,7 @@ router.use('/',(request,response,next) => {
 
 router.get('/access',(request, response) => {
 
+  console.log("sessionID1: " + request.sessionID);
   request.session.config.shop = request.query.shop;
   //redirect url to where you left off, default would be the homepage
   //store in session
@@ -63,16 +64,15 @@ router.get('/exchange',(request, response) => {
         else console.log(res.statusCode);
       })*/
 
-      request.session.destroy((err) => {
-        if(err) console.log(err);
-      });
 
-      console.log(data['access_token']);
+
+      console.log("sessionID1: " + request.sessionID);
 
       //redirect to where you left off
       //get from session
 
       response.redirect(config.front + '/store?token='+data['access_token']);
+      //response.redirect('/profile/fetch');
 
     }
   });

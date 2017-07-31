@@ -2,6 +2,7 @@ const express = require('express');
 const console = require('console');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 //const fs = require('fs');
 //const https = require('https');
 
@@ -13,8 +14,17 @@ const config = require('./config.js');
 
 const port = process.env.PORT || config.port;
 //const server = config.host;
+const corsOptions = {
+  origin: config.front,
+  optionsSuccessStatus: 200,
+  credentials: true
+}
+
 
 let app = new express();
+
+app.use(cors(corsOptions));
+
 
 /*const httpsOptions = {
   key: fs.readFileSync('./server.key'),
