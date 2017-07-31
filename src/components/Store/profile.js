@@ -1,8 +1,7 @@
 const express = require('express');
 const console = require('console');
 const router = express.Router();
-//const cors = require('cors');
-//var httpRequest = require('request');
+var httpRequest = require('request');
 
 
 
@@ -10,8 +9,6 @@ router.use('/',(req,res,next) => {
 
 
   //verify token with session
-
-  console.log("sessionID2: " + req.sessionID);
   next();
 
 });
@@ -21,7 +18,7 @@ router.get('/fetch',(req,res)=>{
 
   //use token to make shopify request
 
-  /*var options = {
+  var options = {
     url: 'https://'+req.session.config.shop+'/admin/shop.json',
     method: 'GET',
     headers:{
@@ -40,11 +37,11 @@ router.get('/fetch',(req,res)=>{
 
     }
   });
-  */
+
 
   //use webhooks maybe
   //store info in db
-  res.end();
+  //res.end();
 
   //respond w/ json object
 

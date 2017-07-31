@@ -46,27 +46,7 @@ router.get('/exchange',(request, response) => {
       console.log(err)
     }else{
 
-      /*const options = {
-        method: 'POST',
-        url: config.host + '/db/saveToken',
-        headers: {
-          'content-type' : 'application/x-www-form-urlencoded'
-        },
-        form: {
-          store_name: request.session.config.shop,
-          access_token: request.session.config.access_token,
-          scope: request.session.config.shopify_scope
-        }
-      }
 
-      httpRequest(options, (err, res) => {
-        if(err) console.log(err);
-        else console.log(res.statusCode);
-      })*/
-
-
-
-      console.log("sessionID1: " + request.sessionID);
 
       //redirect to where you left off
       //get from session
