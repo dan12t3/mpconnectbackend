@@ -8,7 +8,7 @@ router.use('/',(req,res,next) => {
 
 
   //verify token with session
-  console.log(req.headers);
+  console.log(req.sessionID);
 
 
   next();
@@ -18,7 +18,7 @@ router.use('/',(req,res,next) => {
 router.get('/fetch',(req,res)=>{
 
   //use token to make shopify request
-
+  
   var options = {
     url: 'https://'+req.session.config.shop+'/admin/shop.json',
     method: 'GET',
