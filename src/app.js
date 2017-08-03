@@ -3,6 +3,7 @@ const console = require('console');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const cookieparser = require('cookie-parser');
 //const fs = require('fs');
 //const https = require('https');
 
@@ -23,6 +24,7 @@ const corsOptions = {
 
 let app = new express();
 
+app.use(cookieparser());
 app.use(cors(corsOptions));
 
 
