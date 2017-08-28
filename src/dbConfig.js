@@ -2,7 +2,7 @@ const config = {
   host: 'localhost',
   user: 'root',
   password: '',
-  database: 'mpconnect'
+  database: 'raven'
 }
 
 module.exports = config;
