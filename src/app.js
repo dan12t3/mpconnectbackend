@@ -7,9 +7,10 @@ const cookieparser = require('cookie-parser');
 //const fs = require('fs');
 //const https = require('https');
 
-const auth = require('./components/Store/auth.js');
-const db = require('./components/db.js');
-const profile = require('./components/Store/profile.js');
+//const auth = require('./components/Store/auth.js');
+//const db = require('./components/db.js');
+//const profile = require('./components/Store/profile.js');
+const register = require('./components/Store/register.js');
 const config = require('./config.js');
 
 
@@ -59,6 +60,7 @@ app.use(session(sess));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use('/auth',auth);
-app.use('/profile',profile);
-app.use('/db',db);
+//app.use('/auth',auth);
+//app.use('/profile',profile);
+//app.use('/db',db);
+app.use('/register',register);
