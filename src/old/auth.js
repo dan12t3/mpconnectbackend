@@ -1,5 +1,5 @@
 const express = require('express');
-const config = require('../../config.js');
+const config = require('../config.js');
 const console = require('console');
 const router = express.Router();
 const crypto = require('crypto');
