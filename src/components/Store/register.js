@@ -51,7 +51,48 @@ router.post('/newuser',(req,res) => {
 
 router.get('/validateuser',(req,res) => {
   //checks if username and email are valid
-  res.end();
+
+  const error = {};
+  //const query = "SELECT COUNT(*) AS result FROM ?? WHERE ?? = ?";
+  let query = "SELECT ";
+  const usernameQuery = `(SELECT COUNT(*) FROM users WHERE username = '${req.query.username}') AS usernameCount`;
+  const emailQuery = `(SELECT COUNT(*) FROM users WHERE email = '${req.query.email}') AS emailCount`;
+
+  if(req.query.username !== 'undefined'){
+
+    query = query + usernameQuery;
+
+    if(req.query.email !== 'undefined'){
+      query = query + ", ";
+    }
+  }
+
+  if(req.query.email !== 'undefined'){
+
+    query = query + emailQuery;
+  }
+
+  req.conn.query(query, (err,data) => {
+
+    const usernameCount = data[0]['usernameCount'];
+    const emailCount = data[0]['emailCount'];
+
+    if(usernameCount !== undefined && usernameCount > 0){
+      error.username = "We're sorry, that username is unavailable";
+    }
+    if(emailCount !== undefined && emailCount > 0){
+      error.email = "We're sorry, that email is already in use";
+    }
+
+    res.json(error);
+
+  })
+
+
+
+
+
+
 });
 
 
