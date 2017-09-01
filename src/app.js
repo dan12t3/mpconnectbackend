@@ -11,6 +11,7 @@ const cookieparser = require('cookie-parser');
 //const db = require('./components/db.js');
 //const profile = require('./components/Store/profile.js');
 const register = require('./components/Store/register.js');
+const login = require('./components/Store/login.js');
 const config = require('./config.js');
 
 
@@ -64,3 +65,4 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //app.use('/profile',profile);
 //app.use('/db',db);
 app.use('/register',register);
+app.use('/login',login);
