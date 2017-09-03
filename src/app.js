@@ -4,6 +4,7 @@ const session = require('express-session');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieparser = require('cookie-parser');
+const morgan = require('morgan');
 //const fs = require('fs');
 //const https = require('https');
 
@@ -12,7 +13,7 @@ const cookieparser = require('cookie-parser');
 //const profile = require('./components/Store/profile.js');
 const register = require('./components/Store/register.js');
 const login = require('./components/Store/login.js');
-const config = require('./config.js');
+const config = require('./config/config.js');
 
 
 const port = process.env.PORT || config.port;
@@ -60,6 +61,7 @@ if(app.get('env') === 'production') {
 app.use(session(sess));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(morgan('dev'));
 
 //app.use('/auth',auth);
 //app.use('/profile',profile);

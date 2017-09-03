@@ -5,7 +5,7 @@
   "main": "src/app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node src/app.js"
+    "start": "nodemon src/app.js"
   },
   "repository": {
     "type": "git",
@@ -23,7 +23,11 @@
     "cors": "^2.8.4",
     "express": "^4.15.3",
     "express-session": "^1.15.3",
+    "jsonwebtoken": "^7.4.3",
+    "morgan": "^1.8.2",
     "mysql": "^2.13.0",
+    "passport": "^0.4.0",
+    "passport-jwt": "^3.0.0",
     "promise": "^8.0.0",
     "request": "^2.81.0",
     "shopify-node-api": "^1.8.0"

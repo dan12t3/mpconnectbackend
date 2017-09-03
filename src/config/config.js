@@ -13,7 +13,8 @@ const config = {
   redirect: server + '/auth/exchange',
   host: server,
   front: front,
-  port: 5000
+  port: 5000,
+  JWTsecret: 'smellyfeet321'
 }
 
 module.exports = config;
