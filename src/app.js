@@ -5,6 +5,8 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const cookieparser = require('cookie-parser');
 const morgan = require('morgan');
+const passport = require('passport');
+const passportConfig = require('./config/passport.js');
 //const fs = require('fs');
 //const https = require('https');
 
@@ -13,7 +15,10 @@ const morgan = require('morgan');
 //const profile = require('./components/Store/profile.js');
 const register = require('./components/Store/register.js');
 const login = require('./components/Store/login.js');
+const dashboard = require('./components/Store/dashboard.js');
+
 const config = require('./config/config.js');
+
 
 
 const port = process.env.PORT || config.port;
@@ -62,9 +67,11 @@ app.use(session(sess));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(morgan('dev'));
-
+app.use(passport.initialize());
+passportConfig(passport);
 //app.use('/auth',auth);
 //app.use('/profile',profile);
 //app.use('/db',db);
 app.use('/register',register);
 app.use('/login',login);
+app.use('/dashboard',dashboard(passport));
