@@ -47,7 +47,7 @@ router.post('/',(req,res) => {
         user.id = d[0].userID;
 
         const token = jwt.sign(user, config.JWTsecret, {
-          expiresIn: 15
+          expiresIn: 3600
         });
 
         data.success = true
