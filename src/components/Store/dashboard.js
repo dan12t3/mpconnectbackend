@@ -9,9 +9,13 @@ module.exports = (passport) => {
     next();
   });
 
-  router.get('/',(req,res)=> {
+  router.get('/getUser',(req,res)=> {
+    //i have the userID to work with, which would be used as the primary key for user data and foreign key for store data
+
+
+
     console.log(req.user);
-    res.end();
+    res.json(req.user);
   })
 
   return router;

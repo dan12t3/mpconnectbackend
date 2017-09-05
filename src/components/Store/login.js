@@ -43,11 +43,11 @@ router.post('/',(req,res) => {
     }else{ //if user found
 
       if(helper.compare(helper.SHA512(req.body.password,d[0].salt),d[0].password)){ //if pass matches
-        user.username = d[0].username;
-        user.id = d[0].id;
+        //user.username = d[0].username;
+        user.id = d[0].userID;
 
         const token = jwt.sign(user, config.JWTsecret, {
-          expiresIn: 10000
+          expiresIn: 15
         });
 
         data.success = true
