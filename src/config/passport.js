@@ -14,7 +14,7 @@ module.exports = (passport) => {
   passport.use(new JwtStrategy(opts,(jwtPayload, done) => {
      const user = {}
      console.log("pay",jwtPayload);
-     user.username = jwtPayload.username;
+     user.id = jwtPayload.id;
 
      return done(null, user);
 

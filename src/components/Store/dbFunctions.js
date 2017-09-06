@@ -1,5 +1,7 @@
 const crypto = require('crypto');
 const console = require('console');
+const dbConfig = require('../../config/dbConfig.js');
+const mysql = require('mysql');
 
 const helper = {
 
@@ -25,6 +27,23 @@ const helper = {
     console.log("u",userPass);
     console.log("d",dbPass);
     return crypto.timingSafeEqual(Buffer.from(userPass,'utf-8'),Buffer.from(dbPass,'utf-8'))
+  },
+
+  dbConnect: (res, next) => {
+
+    const conn = mysql.createConnection(dbConfig);
+    conn.connect((err) => {
+      if(err) {
+        console.log(err);
+        res.end(err);
+      }
+      else {
+        console.log('DB Connection Established');
+        next();
+      }
+    });
+
+    return conn;
   }
 }
 
