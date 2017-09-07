@@ -5,6 +5,8 @@ const mysql = require('mysql');
 
 const helper = {
 
+  saltLength: 16,
+  
   generateSalt: (length)=>{
 
     return crypto.randomBytes(Math.ceil(length/2))

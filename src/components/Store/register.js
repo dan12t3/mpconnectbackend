@@ -5,7 +5,6 @@ const mysql = require('mysql');
 const config = require('../../config/dbConfig.js');
 const helper = require('./dbFunctions');
 
-const saltLength = 16;
 
 router.use('/',(req,res,next) => {
   //connect to db
@@ -31,7 +30,7 @@ router.post('/newuser',(req,res) => {
 
   const { username, password, firstname, lastname, email, phone } = req.body;
   //inputs new user to db
-  const salt = helper.generateSalt(saltLength);
+  const salt = helper.generateSalt(helper.saltLength);
 
   let query = "INSERT INTO ?? (??, ??, ??, ??, ??, ??, ??) VALUES (?, ?, ?, ?, ?, ?, ?)";
   const insert = ['users','username','password','firstname','lastname','email','phone','salt',username,helper.SHA512(password,salt),firstname,lastname,email,phone,salt];
